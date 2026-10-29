@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decídelo</title>
+<style>
+:root {
+ --site-primary: #16427f;
+ --site-secondary: #16b7a6;
+ --site-background: #eaf5ff;
+ --site-on-primary: #ffffff;
+ --site-on-secondary: #062b35;
+ --site-on-background: #102b52;
+ --site-font-body: ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+ --site-font-heading: ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+ --site-heading-scale: 1;
+ --site-spacing-scale: 1;
+ --site-radius-scale: 1;
+ --site-decoration-opacity: 1;
+ --ink: #12305a;
+ --surface: light-dark(#ffffff, #17263b);
+ --soft: light-dark(#f4f8ff, #202f46);
+ --line: light-dark(#dce8fa, #3a4d68);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--site-font-body);color:var(--ink);background:var(--site-background)}
+#app{min-height:100vh;background-color:var(--site-background);background-image:radial-gradient(circle at 12% 30%, #fff9 0 2px, transparent 3px),radial-gradient(circle at 85% 18%, #ffdf6a99 0 4px, transparent 5px),linear-gradient(135deg, #eaf5ff, #fff7f3 55%, #dcfbf4);background-size:46px 46px,70px 70px,auto;border-radius:0;overflow:hidden}
+header{background:var(--site-primary);color:var(--site-on-primary);padding:18px clamp(16px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{font-size:2.4rem;background:#fff;color:#16427f;border-radius:50%;width:58px;height:58px;display:grid;place-items:center}.brand h1{font:800 calc(2rem * var(--site-heading-scale))/1 var(--site-font-heading);margin:0}.brand p{margin:5px 0 0;color:#dcecff;font-size:.95rem}.tagline{font-size:clamp(1rem,2.5vw,1.5rem);font-weight:700;transform:rotate(-3deg)}
+main{max-width:1200px;margin:auto;padding:clamp(14px,3vw,30px);display:grid;grid-template-columns:230px minmax(260px,1fr) 280px;gap:clamp(14px,2vw,24px);align-items:center}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:calc(24px * var(--site-radius-scale));padding:calc(18px * var(--site-spacing-scale));box-shadow:0 12px 35px #173c6810}
+.panel h2{font-size:calc(1.15rem * var(--site-heading-scale));margin:0 0 14px}
+.categories{display:grid;gap:9px}.cat{border:0;border-radius:14px;padding:12px 13px;color:white;font:700 1rem var(--site-font-body);text-align:left;display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform .15s,filter .15s}.cat:hover{transform:translateX(3px);filter:brightness(1.06)}.cat span:first-child{font-size:1.25rem}.cat.active{outline:3px solid #ffd65b;outline-offset:2px}.c1{background:#f05d4e}.c2{background:#8b45e9}.c3{background:#18b66b}.c4{background:#168ee7}.c5{background:#e93491}.c6{background:#f2b927;color:#382500}.c7{background:#10aeb5}.c8{background:#6556e8}
+.hint{font-size:.83rem;line-height:1.4;color:light-dark(#526984,#c4d1e2);margin:14px 2px 0}
+.wheel-wrap{display:flex;justify-content:center;align-items:center;min-width:0}.wheel-shell{width:min(100%,500px);aspect-ratio:1;position:relative;display:grid;place-items:center}.wheel{width:100%;height:100%;border-radius:50%;border:10px solid #143b72;box-shadow:0 0 0 5px #ffffff,0 0 0 9px #8caee5,0 15px 28px #193c6c40;position:relative;overflow:hidden;transition:transform 4s cubic-bezier(.12,.78,.12,1);background:conic-gradient(from -22.5deg,#ffcf31 0deg 45deg,#f04da5 45deg 90deg,#8c4be8 90deg 135deg,#20a7ed 135deg 180deg,#13c7b1 180deg 225deg,#8ddc40 225deg 270deg,#ff9b24 270deg 315deg,#ff6d47 315deg 360deg)}
+.slice-label{position:absolute;left:50%;top:50%;width:43%;height:22%;margin-left:-21.5%;margin-top:-11%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:clamp(.68rem,1.5vw,1rem);color:#102d55;transform-origin:center center}.slice-label .emoji{font-size:clamp(1.3rem,3vw,2rem);margin-bottom:3px}
+.pointer{position:absolute;top:-9px;left:50%;transform:translateX(-50%);z-index:3;font-size:3rem;filter:drop-shadow(0 4px 3px #0004)}.spin{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);width:32%;aspect-ratio:1;border-radius:50%;border:6px solid #64dff0;background:var(--site-primary);color:white;box-shadow:0 4px 0 #0b2850,0 0 0 5px #ffffffa8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:800 clamp(1rem,2.3vw,1.5rem) var(--site-font-body);cursor:pointer}.spin small{font-size:1.6rem}.spin:disabled{opacity:.85;cursor:wait}
+.result{text-align:center}.crown{font-size:2.2rem}.result h2{font-size:calc(1.55rem * var(--site-heading-scale));margin:3px 0 18px}.answer{background:#fff2bd;border-radius:25px;padding:23px 10px;margin-bottom:18px;color:#13376a;font-size:clamp(1.5rem,3vw,2rem);font-weight:900}.answer .big{font-size:3rem;display:block;margin-bottom:6px}.result p{line-height:1.5;margin:0 0 18px}.action{border:0;border-radius:999px;width:100%;padding:14px 12px;font:800 1rem var(--site-font-body);cursor:pointer;margin-top:8px}.share{background:#11b77b;color:white}.again{background:var(--soft);border:1px solid var(--line);color:var(--ink)}.custom{margin-top:12px;display:none}.custom.show{display:block}.custom label{display:block;font-size:.9rem;font-weight:700;margin-bottom:7px}.custom textarea{width:100%;min-height:88px;border:1px solid var(--line);border-radius:12px;padding:10px;font:inherit;background:var(--surface);color:var(--ink)}.custom button{margin-top:8px;background:var(--site-secondary);color:var(--site-on-secondary)}
+footer{max-width:1050px;margin:0 auto;padding:0 20px 25px;display:flex;justify-content:center;gap:clamp(12px,4vw,40px);flex-wrap:wrap;color:var(--ink);font-weight:700}.feature{display:flex;align-items:center;gap:9px}.feature b{font-size:1.6rem}.feature small{display:block;font-weight:500;opacity:.75}
+@media(max-width:900px){main{grid-template-columns:1fr 1fr}.wheel-wrap{grid-column:2;grid-row:1 / span 2}.result{grid-column:1}.categories{grid-template-columns:1fr 1fr}.cat{font-size:.9rem;padding:10px}.panel{padding:14px}}
+@media(max-width:620px){header{padding:14px}.brand h1{font-size:1.8rem}.tagline{display:none}main{grid-template-columns:1fr;padding:14px}.categories{grid-template-columns:1fr 1fr}.wheel-wrap{grid-column:auto;grid-row:auto;grid-row:1}.wheel-shell{width:min(88vw,400px)}.result{grid-column:auto}.panel h2{margin-bottom:10px}.hint{display:none}footer{padding-bottom:22px;gap:15px}.feature{font-size:.9rem}}
+@media(prefers-reduced-motion:reduce){.wheel{transition:none}.cat{transition:none}}
+</style>
+</head>
+<body>
+<div id="app">
+<header><div class="brand"><div class="logo">🎡</div><div><h1>Decídelo</h1><p>La ruleta que te saca de dudas</p></div></div><div class="tagline">Gira, decide, disfruta ✨</div></header>
+<main>
+<section class="panel"><h2>Elige una categoría:</h2><div class="categories" id="categories"></div><p class="hint">También puedes personalizar la ruleta con tus propias opciones.</p><div class="custom" id="custom"><label for="customOptions">Tus opciones (una por línea)</label><textarea id="customOptions" placeholder="Pizza&#10;Tacos&#10;Sushi"></textarea><button class="action" id="applyCustom">Usar mis opciones</button></div></section>
+<div class="wheel-wrap"><div class="wheel-shell"><div class="pointer">📍</div><div class="wheel" id="wheel"></div><button class="spin" id="spin"><span>Girar</span><small>⟳</small></button></div></div>
+<section class="panel result"><div class="crown">👑</div><h2>¡La decisión es…</h2><div class="answer" id="answer"><span class="big">🤔</span>¿Qué elegimos?</div><p id="message">Deja que la ruleta decida por ti. ¡A jugar!</p><button class="action share" id="share">↗ Compartir resultado</button><button class="action again" id="again">⟳ Girar de nuevo</button></section>
+</main>
+<footer><div class="feature"><b>⚡</b><div>Rápido<small>Decide en segundos</small></div></div><div class="feature"><b>🙂</b><div>Divertido<small>Ideal para compartir</small></div></div><div class="feature"><b>💗</b><div>Útil<small>Siempre una buena idea</small></div></div><div class="feature"><b>📱</b><div>En cualquier lugar<small>Móvil u ordenador</small></div></div></footer>
+</div>
+<script>
+const categories=[
+ {name:'Qué comer',icon:'🍴',cls:'c1',items:[['🍕','Pizza'],['🍣','Sushi'],['🍔','Hamburguesa'],['🍝','Pasta'],['🥗','Ensalada'],['🌮','Tacos'],['🍜','Ramen'],['🥪','Sándwich']]},
+ {name:'Qué ver',icon:'🎬',cls:'c2',items:[['😂','Comedia'],['🚀','Ciencia ficción'],['🕵️','Misterio'],['💖','Romántica'],['🧙','Fantasía'],['😱','Terror'],['🎥','Documental'],['🦸','Acción']]},
+ {name:'Quién empieza',icon:'🎲',cls:'c3',items:[['🙋','Tú'],['👉','La persona de la derecha'],['👈','La persona de la izquierda'],['🎲','Quien saque número más alto'],['🪙','Cara o cruz'],['😎','Quien tenga más suerte']]},
+ {name:'Qué hacer',icon:'✈️',cls:'c4',items:[['🚶','Dar un paseo'],['☕','Tomar un café'],['🎳','Ir a jugar'],['🌳','Salir a la naturaleza'],['🎬','Ver una película'],['🍦','Comer algo rico'],['📸','Descubrir un lugar'],['🛋️','Relax en casa']]},
+ {name:'Para parejas',icon:'💗',cls:'c5',items:[['🍽️','Cena especial'],['🌅','Ver el atardecer'],['💆','Masaje'],['🎲','Juego de pareja'],['🚗','Escapada sorpresa'],['💬','Charla sin móviles'],['💃','Bailar juntos'],['❤️','Cita improvisada']]},
+ {name:'Con amigos',icon:'👥',cls:'c6',items:[['🎮','Noche de juegos'],['🍕','Pedir comida'],['🎤','Karaoke'],['⚽','Deporte'],['🎬','Noche de cine'],['🧩','Reto en equipo'],['🚶','Explorar la ciudad'],['😂','Contar anécdotas']]},
+ {name:'Ideas locas',icon:'💡',cls:'c7',items:[['🕺','Baila 30 segundos'],['🎨','Dibuja algo con ojos cerrados'],['📞','Llama a alguien querido'],['🤳','Haz una foto divertida'],['🎵','Canta tu canción favorita'],['🌍','Elige un lugar al azar'],['🧠','Inventa un reto'],['🎁','Haz una sorpresa']]},
+ {name:'Personaliza',icon:'⚙️',cls:'c8',items:[['⭐','Opción 1'],['🌈','Opción 2'],['🎯','Opción 3'],['🎉','Opción 4']]}
+];
+let active=0,items=categories[0].items,rotation=0,busy=false,lastResult='';
+const cats=document.getElementById('categories'),wheel=document.getElementById('wheel'),answer=document.getElementById('answer'),message=document.getElementById('message'),custom=document.getElementById('custom');
+function renderCategories(){cats.innerHTML='';categories.forEach((c,i)=>{const b=document.createElement('button');b.className='cat '+c.cls+(i===active?' active':'');b.innerHTML=`<span>${c.icon}</span><span>${c.name}</span>`;b.onclick=()=>selectCategory(i);cats.appendChild(b)})}
+function drawWheel(){const colors=['#ffcf31','#f04da5','#8c4be8','#20a7ed','#13c7b1','#8ddc40','#ff9b24','#ff6d47'];const n=items.length;wheel.style.background=`conic-gradient(${items.map((it,i)=>`${colors[i%colors.length]} ${i*360/n}deg ${(i+1)*360/n}deg`).join(',')})`;wheel.innerHTML='';items.forEach((it,i)=>{const el=document.createElement('div');el.className='slice-label';const angle=i*360/n+180/n;el.style.transform=`rotate(${angle}deg) translateY(-${wheel.clientWidth*.30}px) rotate(${-angle}deg)`;el.innerHTML=`<span class="emoji">${it[0]}</span><span>${it[1]}</span>`;wheel.appendChild(el)})}
+function selectCategory(i){active=i;items=categories[i].items;custom.classList.toggle('show',i===7);renderCategories();drawWheel();answer.innerHTML='<span class="big">🤔</span>¿Qué elegimos?';message.textContent='Deja que la ruleta decida por ti. ¡A jugar!';lastResult=''}
+function spin(){if(busy||!items.length)return;busy=true;document.getElementById('spin').disabled=true;const idx=Math.floor(Math.random()*items.length);const n=items.length;const target=360*5+(360-(idx*360/n+180/n));rotation+=target;wheel.style.transform=`rotate(${rotation}deg)`;setTimeout(()=>{const result=items[idx];lastResult=`${result[0]} ${result[1]}`;answer.innerHTML=`<span class="big">${result[0]}</span>${result[1]}!`;message.textContent='¡Decisión tomada! Ahora toca disfrutar 😄';confetti();busy=false;document.getElementById('spin').disabled=false},4050)}
+function confetti(){for(let i=0;i<32;i++){const e=document.createElement('span');e.textContent=['🎉','✨','⭐','🎊'][Math.floor(Math.random()*4)];e.style.cssText=`position:fixed;z-index:99;left:${Math.random()*100}vw;top:-30px;font-size:${16+Math.random()*20}px;pointer-events:none;transition:transform ${1.2+Math.random()*1.3}s ease-in,opacity 2s;`;document.body.appendChild(e);requestAnimationFrame(()=>{e.style.transform=`translateY(${window.innerHeight+80}px) rotate(${Math.random()*500}deg)`;e.style.opacity='0'});setTimeout(()=>e.remove(),2600)}}
+document.getElementById('spin').onclick=spin;document.getElementById('again').onclick=spin;document.getElementById('share').onclick=async()=>{const text=lastResult?`¡Decídelo ha elegido: ${lastResult}! 🎡`:'¡Prueba Decídelo, la ruleta que te saca de dudas! 🎡';if(navigator.share){try{await navigator.share({title:'Decídelo',text})}catch(e){}}else if(navigator.clipboard){try{await navigator.clipboard.writeText(text);message.textContent='¡Resultado copiado! Ya puedes compartirlo.'}catch(e){message.textContent=text}}else{message.textContent=text}};
+document.getElementById('applyCustom').onclick=()=>{const values=document.getElementById('customOptions').value.split('\n').map(s=>s.trim()).filter(Boolean);if(values.length<2){message.textContent='Escribe al menos dos opciones, una por línea.';return}items=values.map((v,i)=>[['⭐','🌈','🎯','🎉','🍀','🔥','💎','🎈'][i%8],v]);categories[7].items=items;drawWheel();message.textContent='¡Tu ruleta personalizada está lista!'};
+window.addEventListener('resize',drawWheel);renderCategories();drawWheel();
+</script>
+</body></html>
